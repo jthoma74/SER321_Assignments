@@ -152,4 +152,19 @@ public class PicturePanel extends JPanel {
     }
     return false;
   }
-}
+
+  public void insertBufferedImage(BufferedImage img, int row, int col) throws IOException, InvalidCoordinateException {
+    // Check for invalid coordinates
+    if (row < 0 || col < 0 || 
+        row >= 0 && labels.length <= row || 
+        labels[row].length <= col) {
+      throw new InvalidCoordinateException(labels.length, labels.length, row, col);
+    }
+
+      ImageIcon icon = new ImageIcon(img); 
+      // do we need to setup the dimensions of all the containers?
+      handleFirstImage(icon.getIconWidth(), icon.getIconHeight());
+      // insert image
+      labels[row][col].setIcon(icon);
+    }
+} //end class

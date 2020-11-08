@@ -7,6 +7,8 @@ import java.io.File;
 import java.io.IOException;
 
 import javax.imageio.ImageIO;
+import java.util.ArrayList;
+
 
 /**
  * Creates the square image grid used in Assignment 3
@@ -50,7 +52,61 @@ public class GridMaker {
     return resizedImage;
   }
   
-  public static void main(String[] args) throws IOException {
+/**
+ * Takes a file and creates cropped versions of it; saves it to the directory
+ * @param filename file to chop up
+ * @param dimension dimension parameter for the smaller images
+ * @return String[] returns an array of cropped file names
+ */
+public ArrayList<String> SliceImageForMe(String filename, int dimension) {
+    File file = new File(filename);
+    ArrayList<String> listCroppedImages = new ArrayList<String>();
+    
+    //extract the different path pieces - see below for definition
+    FancyPath path = new FancyPath(file);
+    if (!file.exists()) {
+      System.err.println("Cannot find file: " + file.getAbsolutePath());
+      System.exit(-1);
+    } //end if
+    
+    try {
+      // Read in image and adjust
+      BufferedImage img = ImageIO.read(file);
+      int divisibleHeight = img.getHeight() - (img.getHeight() % dimension);
+      int divisibleWidth = img.getWidth() - (img.getWidth() % dimension);
+      img = resize(img, divisibleWidth, divisibleHeight);
+
+      // calculate crop size
+      int cellHeight = divisibleHeight / dimension;
+      int cellWidth = divisibleWidth / dimension;
+
+      String oldFilename = path.getFilename();
+
+      // for each crop section:
+      for(int r = 0; r < dimension; ++r) {
+          for (int c = 0; c < dimension; ++c) {
+            // crop and output
+            BufferedImage output = cropImage(img, c*cellWidth, r*cellHeight, cellWidth, cellHeight);
+            path.setFilename(oldFilename + "_" + r + "_" + c);
+            path.setExtension("jpg");
+            listCroppedImages.add(path.toString());
+            System.out.println(path.toString());
+            File pathFile = new File(path.toString());
+            ImageIO.write(output,"jpg", pathFile);
+      } //end inner for
+  } //end outer for
+
+    // finish with useful info
+    System.out.println("Output image dimension: " + new Dimension(img.getWidth(), img.getHeight()));
+    System.out.println("Cell output dimension: " +  new Dimension(cellWidth, cellHeight));
+  } catch (Exception ex1) {
+      ex1.printStackTrace();
+  } // end of try catch
+  return listCroppedImages;
+} //end of SliceImageForMe()
+
+
+public static void main(String[] args) throws IOException {
     if (args.length == 0) {
       System.out.println("Maker <image to slice> <size>");
       System.exit(0);
@@ -91,7 +147,7 @@ public class GridMaker {
     // finish with useful info
     System.out.println("Output image dimension: " + new Dimension(img.getWidth(), img.getHeight()));
     System.out.println("Cell output dimension: " +  new Dimension(cellWidth, cellHeight));
-  }
+  } 
   
   /**
    * Tokenizes and analyzes a file path to allow for manipulation

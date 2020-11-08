@@ -48,8 +48,8 @@ task runClient(type: JavaExec) {
   main = 'Assignment3Game.GameClientGUI'
   
   //allows you to provide host&number:
-  // run with arguments e.g.: gradle runClient -Phost=localhost -Pnumber=4444 -Ptiles=2
-  if (project.hasProperty("host") && project.hasProperty("number") && project.hasProperty("tiles")){
-  	args(project.getProperty('host'),project.getProperty('number'),project.getProperty('tiles'));
+  // run with arguments e.g.: gradle runClient -Phost=localhost -Pnumber=4444 
+  if (project.hasProperty("host") && project.hasProperty("number")){
+  	args(project.getProperty('host'),project.getProperty('number'));
 	}
 } // close task runClient

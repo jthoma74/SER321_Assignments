@@ -48,6 +48,8 @@ public class GameServer {
         Socket clientSocket;
         int intPortNumber = Integer.parseInt(args[0]);
 
+
+
         try {
             // create server socket:
             ServerSocket serv = new ServerSocket(intPortNumber);
@@ -72,7 +74,6 @@ public class GameServer {
             // First argument received from client is the number of tiles:
             message = (Message) objInStream.readObject();
             intParcelCount++;
-            System.out.println("Message parcel number :" +intParcelCount+ "received.");
 
             // Parse the message into its corresponding variables
             parseClientMessage(message);
@@ -108,6 +109,9 @@ public class GameServer {
 
                 // Process the message from client using the protocol and print to verify:
                 if (message.getState() == GameProtocol.ANS_SENT) {
+                    if (message.getText().equalsIgnoreCase("Quit")){
+                        break;
+                    } //quit 
                     message = objProtocol.protoProcess(message);
                     System.out.println("\nProtocol Processed String Message: " + message.getText());  
                     System.out.println("Protocol processed int Answer Flag: " + message.getNumber());
@@ -117,26 +121,29 @@ public class GameServer {
                 // If the protocol shows that the game is won or lost, break:
                 if (message.getState() == GameProtocol.WIN || message.getState() == GameProtocol.LOST){
                     objOutStream.writeObject(message);
-                    break; //end connection
+                    Thread.sleep(12000);
+                    System.out.println("Closing: " + System.currentTimeMillis());
+                    serv.close(); //close socket
+                    break; 
                 } else if (message.getState() == GameProtocol.QN_SENT && message.getNumber() == 1) { //if answer is correct AND a new qn has been sent                      
-                        /**  
-                         * STUB: Add image to the message
-                         **/
-
                         message.setState(GameProtocol.SERVER_SENT);    
                         System.out.println("\nSending String Message: " + message.getText());  
                         System.out.println("Sending int Answer Flag: " + message.getNumber());
                         System.out.println("Sending int Message State : " + message.getState()); 
                         objOutStream.writeObject(message);                      
                     } else if (message.getState() == GameProtocol.QN_SENT && message.getNumber() == 0) { //if answer is incorrect AND a new qn has been sent                      
-                        // Do NOT add a new image... Just push the message through socket:
-
                         message.setState(GameProtocol.SERVER_SENT);    
                         System.out.println("\nSending String Message: " + message.getText());  
                         System.out.println("Sending int Answer Flag: " + message.getNumber());
                         System.out.println("Sending int Message State : " + message.getState()); 
                         objOutStream.writeObject(message);                   
-                    }               
+                    } else if (message.getState() == GameProtocol.NO_QNS) {
+                        message.setState(GameProtocol.SERVER_SENT);
+                        System.out.println("\nSending String Message: " + message.getText());  
+                        System.out.println("Sending int Answer Flag: " + message.getNumber());
+                        System.out.println("Sending int Message State : " + message.getState()); 
+                        objOutStream.writeObject(message);
+                    }      
             } //while loop
         } catch (Exception e) {
                 e.printStackTrace();
