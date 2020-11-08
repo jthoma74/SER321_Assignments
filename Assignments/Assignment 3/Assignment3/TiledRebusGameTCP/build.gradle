@@ -1,0 +1,55 @@
+// set as java application
+apply plugin: 'application'
+
+//define main class
+mainClassName = 'Concentration'
+
+task Gui(type: JavaExec) {
+  group 'gui'
+  description 'Displays a GUI for a game of concentration'
+
+  classpath = sourceSets.main.runtimeClasspath
+
+  main = 'Assignment3Game.ClientGui'
+  standardInput = System.in
+}
+
+task Maker(type: JavaExec) {
+  group 'maker'
+  description 'Takes an image and makes the rebus library'
+
+  classpath = sourceSets.main.runtimeClasspath
+
+  main = 'Assignment3Game.GridMaker'
+  standardInput = System.in
+}
+
+task runServer(type: JavaExec) {
+  group 'TCP Server/Client'
+  description 'Creates Server socket'
+
+  classpath = sourceSets.main.runtimeClasspath
+
+  main = 'Assignment3Game.GameServer'
+  
+  //allows you to provide number:
+  // run with arguments e.g.: gradle runServer -Pnumber=4444
+    if (project.hasProperty("number")) {
+    	args(project.getProperty('number'));
+	} //end if
+} //end task runServer
+
+task runClient(type: JavaExec) {
+  group 'TCP Server/Client'
+  description 'Creates client socket sends a message and number to server'
+
+  classpath = sourceSets.main.runtimeClasspath
+
+  main = 'Assignment3Game.GameClientGUI'
+  
+  //allows you to provide host&number:
+  // run with arguments e.g.: gradle runClient -Phost=localhost -Pnumber=4444 
+  if (project.hasProperty("host") && project.hasProperty("number")){
+  	args(project.getProperty('host'),project.getProperty('number'));
+	}
+} // close task runClient
