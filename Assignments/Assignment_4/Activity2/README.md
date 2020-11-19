@@ -2,7 +2,7 @@
 ACTIVITY 2: The game
 ====================
 
-If you would like to test the game up to 2 points instead of 5 to win, change the code in Peer.java, line: 335
+If you would like to test the game up to 2 points instead of 5 (so it doesnt take forever to grade), change the code in Peer.java, line: 335
 
 For each peer on the console: 
 gradle runPeer --args "Jem 8000" --console=plain -q
@@ -19,9 +19,12 @@ localhost:8000 localhost:8001
 [etc...]
 The program can handle more than 3 peers
 
+NOTES:
 
-At the end of the game (after someone has won), everyone switches back to chat-mode and is able to restart a game by hitting "start"
-If one peer lags on this, just hit "enter" on their console.
+** At the end of the game (after someone has won), everyone switches back to chat-mode and is able to restart a game by hitting "start"
+    If one peer lags, or doesn't receive this message to send "start", just hit the enter-key on their console. **
+    
+** Each peer can only answer ONCE. Even if it says "try again" **
 
 ===============
 PYTHON LISTENER
