@@ -4,6 +4,8 @@ ACTIVITY 2: The game
 
 If you would like to test the game up to 2 points instead of 5 (so it doesnt take forever to grade), change the code in Peer.java, line: 335
 
+DIRECTIONS:
+
 For each peer on the console: 
 gradle runPeer --args "Jem 8000" --console=plain -q
 gradle runPeer --args "Kay 8001" --console=plain -q
@@ -19,12 +21,27 @@ localhost:8000 localhost:8001
 [etc...]
 The program can handle more than 3 peers
 
+** If you want to test a different json file, place it in the resources directory. Make sure it is named 'qbank.json'
+
 NOTES:
 
+** A JSON protocol was used for the entirety of the game **
+Header -
+'username' 
+'game_active' (flag)
+'message_type'
+'correct_guesser'
+'host_port'
+
+Payload -
+'message'
+
+The answer is checked from the HOST's side, and a message is sent back to the peers that the [correct_guesser] had the right answer.
+
 ** At the end of the game (after someone has won), everyone switches back to chat-mode and is able to restart a game by hitting "start"
-    If one peer lags, or doesn't receive this message to send "start", just hit the enter-key on their console. **
+    If one peer lags, or doesn't receive this message to hit "start" to begin a game, just hit the enter-key on their console. **
     
-** Each peer can only answer ONCE. Even if it says "try again" **
+*** IMPORTANT: Each peer can only answer ONCE. Even if it says "try again" ***
 
 ===============
 PYTHON LISTENER
