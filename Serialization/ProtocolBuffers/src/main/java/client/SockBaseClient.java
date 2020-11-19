@@ -71,7 +71,7 @@ class SockBaseClient {
     private static JSONObject readJson(String filename) throws IOException, JSONException {
       // read json from build directory, so the getResource is needed
       File file = new File(
-        SockBaseClient.class.getResource("/"+filename).getFile()
+        Peer.class.getResource("/"+filename).getFile()
       );
       Reader reader = new FileReader(file);
       JSONTokener jsonTokener = new JSONTokener(reader);
