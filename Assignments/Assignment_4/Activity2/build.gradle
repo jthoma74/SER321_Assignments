@@ -25,3 +25,28 @@ task runPeer(type: JavaExec) {
 
   //gradle runpeer --args "Jemy 7000" --console=plain -q
 }
+
+def host = 'localhost'
+def port = 8000
+
+
+// task reading in the arguments if any given, if not the default from above will be used
+task arguments {
+    if (project.hasProperty("host")) {
+      host = project.getProperty("host")
+    }
+    if (project.hasProperty("port")) {
+      port = project.getProperty("port")
+    }
+}
+
+
+// runs Python client through command line
+//gradle runClientPython -Pport=8000 -Phost=localhost
+task runClientPython(type:Exec) {
+   dependsOn arguments
+
+   workingDir 'src/main/python'
+   
+   commandLine 'python', 'SocketClient.py', host, port
+} 

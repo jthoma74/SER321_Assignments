@@ -332,7 +332,7 @@ public class Peer {
 					if (jobIncoming.getString("correct_guesser").equalsIgnoreCase(username)) {
 					    //System.out.println("enterPawnMode: I am the correct guesser");
 						myScore++;
-						if (myScore == 2) {
+						if (myScore == 5) {
 							//Game over
 							System.out.println("I got it! I WON, IWON, IWON!!!");	
 							message = "{'username': '"+ username +"', 'message':'I WON, IWON, IWON!!!', 'game_active':'NO', 'host_port':" 
