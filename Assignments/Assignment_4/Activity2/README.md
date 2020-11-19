@@ -1,4 +1,4 @@
-====================
+
 ACTIVITY 2: The game
 ====================
 
@@ -43,7 +43,7 @@ The answer is checked from the HOST's side, and a message is sent back to the pe
     
 *** IMPORTANT: Each peer can only answer ONCE. Even if it says "try again" ***
 
-===============
+
 PYTHON LISTENER
 ===============
 The python listener is hard-coded to use port 8000. One of the peers must be on that port for the listener to work
@@ -59,7 +59,7 @@ It gave me a string to int conversion error....
 
 This was the previous version of my code before I hardcoded it in my final submission....
 
-==================================
+
 The python code that did not work:
 ==================================
 
