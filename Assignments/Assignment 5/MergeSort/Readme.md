@@ -1,4 +1,7 @@
-# Activity 1
+#Activity 1
+
+##Task 1: Getting started
+
 
 **1. Explain the main structure of this code and the advantages and disadvantages of the setup of the distributed system.**
   
