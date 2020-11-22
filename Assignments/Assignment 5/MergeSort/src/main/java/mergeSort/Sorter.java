@@ -5,12 +5,17 @@ import java.util.PriorityQueue;
 import org.json.JSONObject;
 
 public class Sorter extends Node {
+  // creates a priority queue with natural ordering. Least value at head
   private PriorityQueue<Integer> sorted = new PriorityQueue<Integer>();
   
+  // Creates a node calling super method from node
   public Sorter(int port) {
     super (port);
   }
 
+  /**
+   * Initializes JSON obj to zero, then adds data from JSON Array into priority queue
+   */
   public synchronized JSONObject init(JSONObject object) {
     sorted.clear();
     for (var val : object.getJSONArray("data")) {
@@ -23,7 +28,7 @@ public class Sorter extends Node {
     object.put("response", true);
     if (sorted.size() > 0) {
       object.put("hasValue", true);
-      object.put("value", sorted.peek());
+      object.put("value", sorted.peek()); //recursive. 
     } else {
       object.put("hasValue", false);
     }
