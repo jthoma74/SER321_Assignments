@@ -1,7 +1,6 @@
-#Activity 1
+# Activity 1
 
-##Task 1: Getting started
-
+#### Task 1
 
 **1. Explain the main structure of this code and the advantages and disadvantages of the setup of the distributed system.**
   
@@ -38,6 +37,17 @@
 The results show that the less complex the distribution algorithm, the faster the merge sort.  I testes 3 different array lengths with 4 trials each. In all the attempts, a simple structure of 1 sorter resulted the fastest merge sort results.
 
 **3. Experiment with the "tree" setup, what happens with more or less nodes when sorting the same array and different arrays?  When does the distribution make things better? Does it ever make things faster. As in the previous step experiment and describe your experiment and your results in detail.**
+
+*Averages across different array lengths and number of nodes
+| Structure | Nodes | Arr Size: 14 | Arr Size: 35 | Arr Size: 79 |
+| ------ | ------ | ------ | ------ | ------ |
+| 1 Sorter | 1 | 67.5 | 83 | 137 | 
+| 1 branch and 2 sorters | 3 | 70.5 | 126.5 | 261.5 |
+| 3 branches and 4 sorters | 7 | 157.5 | 323.5 | 641.25 |
+
+We see that with 1 node, and 3 (1 branch and 2 sorters), the difference between the two increases as the array length increases.  
+Distributing algorithms have similar results on smaller data sets; however, as the size of the data set increases, merge sort is not an optimal algorithm  
+to implement over a distributed system.
 
 **4. Explain the traffic that you see on Wireshark. Would you say it is a lot?**
 

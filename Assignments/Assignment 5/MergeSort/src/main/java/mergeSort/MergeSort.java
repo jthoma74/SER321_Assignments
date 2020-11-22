@@ -107,17 +107,14 @@ public class MergeSort {
 
     // make sure we didn't hang
     System.out.println("started");
-    /*
+
     // One Sorter
     System.out.println("\nRunning with 1 sorter: ");
     Test(ports.get(3));
-    
-
-    
+  
     // One branch / Two Sorters
     System.out.println("\nRunning with 1 branch and 2 starters: ");
     Test(ports.get(2));
-    */
     
     // Three Branch / Four Sorters
     System.out.println("\nRunning with 3 branches and 4 sorters: ");
