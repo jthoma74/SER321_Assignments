@@ -3,6 +3,10 @@
 #### Task 1
 
 **1. Explain the main structure of this code and the advantages and disadvantages of the setup of the distributed system.**
+The current code creates 7 nodes: 3 branches, and 4 sorter nodes
+Each branch node has a left and right "child" node. The array is split in half between the two child nodes each branch node has.
+The branch node merges these two sorted arrays of the child together in the correct order.
+
   
 **2. Run the code with different arrays to sort (different sizes) and include code to measure the time for each of the sortings.  In your Readme describe your experiments and your analyzes of them. E.g. why is the result as it is?  Does the distribution help? Why, why not? See this as setting up your own experiment and give me a good description and evaluation, which is well structured.**
 
