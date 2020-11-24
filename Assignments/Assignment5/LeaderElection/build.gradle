@@ -1,0 +1,52 @@
+// set as java application
+apply plugin: 'application'
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    compile group: 'org.json', name: 'json', version: '20200518'
+}
+
+//define main class
+mainClassName = 'Peer'
+
+//gradle runpeer --args "Jemy 7000 true" --console=plain -q
+task runPeer(type: JavaExec) {
+  description 'Runs a peer'
+
+  classpath = sourceSets.main.runtimeClasspath
+
+  main = 'Peer'
+  standardInput = System.in
+
+  args 'name' // username
+  args 'port' // port
+  args 'leader' // leader flag
+}
+
+def host = 'localhost'
+def port = 8000
+
+/*
+// task reading in the arguments if any given, if not the default from above will be used
+task arguments {
+    if (project.hasProperty("host")) {
+      host = project.getProperty("host")
+    }
+    if (project.hasProperty("port")) {
+      port = project.getProperty("port")
+    }
+}
+
+
+// runs Python client through command line
+//gradle runClientPython -Pport=8000 -Phost=localhost
+task runClientPython(type:Exec) {
+   dependsOn arguments
+
+   workingDir 'src/main/python'
+   
+   commandLine 'python', 'SocketClient.py', host, port
+} */

@@ -16,16 +16,18 @@ import org.json.JSONTokener;
 public class NetworkUtils {
   /**
    * Performs a request on a remote node and waits for a reply which it rebuilds into a message
-   * 
+   * Creates a JSON object from message received and returns it...
    * @param message to send to remote node
    * @return the reply message it read back
    */
   public static JSONObject send(int port, JSONObject message) {
     Socket socket = null;
     try {
-      // open socket
+      // open client-side socket. Request to connect to server socket at port
       socket = new Socket("localhost", port);
+      // blocks until msg is received from server
       BufferedReader in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
+      // To write out to the output stream connected to port on server side
       PrintWriter out = new PrintWriter(socket.getOutputStream(), true);
       
       // write message
@@ -33,6 +35,7 @@ public class NetworkUtils {
       // expect message in reply
       String line = in.readLine();
       JSONTokener tokener = new JSONTokener(line);
+      // Store it in a json object
       JSONObject root = new JSONObject(tokener);
       
       // cleanup

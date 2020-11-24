@@ -33,7 +33,7 @@ public abstract class Node implements Runnable {
       while (true) { // handle connections indefinitely
         Socket conn = null;
         try {
-          // listen for connection
+          // listen for connection. Comes from networkUtils.send()
           conn = socket.accept();
 
           // read in a message

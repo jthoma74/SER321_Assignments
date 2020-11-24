@@ -68,6 +68,7 @@ public class MergeSort {
     long start = System.nanoTime();
     JSONObject response = NetworkUtils.send(port, init(a));
       System.out.println(response);
+      // Check the child node for message
       response = NetworkUtils.send(port, peek());
       System.out.println(response);
 
@@ -83,18 +84,20 @@ public class MergeSort {
       } //end while 
       long finish = System.nanoTime();
       long time = TimeUnit.NANOSECONDS.toMillis(finish - start);
-      System.out.println ("Time measured: " + time);
+      System.out.println ("Time measured: " + time + "ms");
   } //end method
 
 
   public static void main(String[] args) {
     // all the listening ports in the setup
-    ArrayList<Integer> ports = new ArrayList<>(Arrays.asList(8000, 8001, 8002, 8003, 8004, 8005, 8006));
+    ArrayList<Integer> ports = new ArrayList<>(Arrays.asList(8000));
 
     // setup each of the nodes
     //      0
     //   1     2
     // 3   4 5   6
+
+    
     new Thread(new Branch(ports.get(0), ports.get(1), ports.get(2))).start();
     
     new Thread(new Branch(ports.get(1), ports.get(3), ports.get(4))).start();
@@ -104,6 +107,7 @@ public class MergeSort {
     new Thread(new Branch(ports.get(2), ports.get(5), ports.get(6))).start();
     new Thread(new Sorter(ports.get(5))).start();
     new Thread(new Sorter(ports.get(6))).start();
+    
 
     // make sure we didn't hang
     System.out.println("started");
